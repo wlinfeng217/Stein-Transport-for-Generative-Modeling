@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stein-generative-modeling"
+version = "0.1.0"
+description = "Stein drift approximations for sample-based generative modeling"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "matplotlib>=3.8",
+  "torch>=2.2",
+  "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2",
+  "pytest>=8.0",
+  "ruff>=0.8",
+]
+notebook = [
+  "ipykernel>=6.29",
+  "jupyter>=1.0",
+  "nbclient>=0.10",
+]
+
+[project.scripts]
+two-moon-experiment = "stein_generative_modeling.two_moon:main"
+gaussian-mixture-experiment = "stein_generative_modeling.gaussian_mixture:main"
+checkerboard-experiment = "stein_generative_modeling.checkerboard:main"
+swiss-roll-experiment = "stein_generative_modeling.swiss_roll:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stein_generative_modeling"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402"]
